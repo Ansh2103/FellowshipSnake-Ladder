@@ -1,46 +1,58 @@
 import java.util.Random;
 
-public class snakeAndLadder{
+class snakeAndLadder{
 
-   //variable declaration
+   //variable declaration and Constants
    int currentPosition = 0;
    int diceResult = 0;
+   int WINNINGPOSITION = 100;
 
    public static void main(String args[]){
+
       snakeAndLadder obj = new snakeAndLadder();
-      System.out.println("Player is at Position : "+ obj.checkOptions());
+      System.out.println("Player is at Position : " + obj.checkOptions());
    }
 
    //dieRoll() method will act as Thrown physical dice
+
    public int dieRoll(int rollLimit){
-      Random r = new Random();
-      int diceRoll = (r.nextInt(rollLimit)) + 1;
+      Random rand = new Random();
+      int diceRoll = (rand.nextInt(rollLimit)) + 1;
       return diceRoll;
    }
 
-   //checkOptionsForPlay will tell that player got snake, ladder or No play
    public int checkOptions(){
 
-      int checkOptionsForPlay = dieRoll(3);
+      //Here Player wont stop untill it's current Position is 100
 
-      switch(checkOptionsForPlay){
+      while(currentPosition < WINNINGPOSITION){
+         int checkOptionsForPlay = dieRoll(3);
 
-         case 1:
-            System.out.println("No play");
-         break;
+         switch(checkOptionsForPlay){
+            case 1:
+               System.out.println("\nNo play and Current Position is " + currentPosition);
+            break;
 
-         case 2:
-            System.out.println("You got Snake");
-            diceResult=dieRoll(6);
-            currentPosition -= diceResult;
-         break;
+            case 2:
+               diceResult = dieRoll(6);
 
-         case 3:
-            System.out.println("You got Ladder");
-            diceResult = dieRoll(6);
-            currentPosition += diceResult;
-         break;
+               //Check if Player's position is less or equal to 0, then position=0
+               if(currentPosition <= diceResult){
+                  currentPosition = 0;
+                  System.out.println("\nYou got Snake with dice face of " + diceResult + " and Current Position is " + currentPosition);
+               }
+               else{
+                  currentPosition -= diceResult;
+                  System.out.println("\nYou got Snake with dice face of " + diceResult + " and Current Position is " + currentPosition);
+               }
+            break;
 
+            case 3:
+               diceResult = dieRoll(6);
+               currentPosition += diceResult;
+               System.out.println("\nYou got Ladder with dice face of " + diceResult + " and Current Position is " + currentPosition);
+            break;
+         }
       }
       return currentPosition;
    }
