@@ -1,19 +1,47 @@
 import java.util.Random;
 
-class snakeAndLadder{
-	Random rand = new Random();
+public class snakeAndLadder{
 
-	//variable declaration
-	public static void main(String args[]){
+   //variable declaration
+   int currentPosition = 0;
+   int diceResult = 0;
 
-		snakeAndLadder obj=new snakeAndLadder();
-		System.out.println("Thrown Dice Got : "+obj.dieRoll());
-	}
+   public static void main(String args[]){
+      snakeAndLadder obj = new snakeAndLadder();
+      System.out.println("Player is at Position : "+ obj.checkOptions());
+   }
 
-	//dieRoll() method will act as Thrown dice
-	public int dieRoll(){
-		int diceRoll = (rand.nextInt(6))+1;
-		return diceRoll;
-	}
+   //dieRoll() method will act as Thrown physical dice
+   public int dieRoll(int rollLimit){
+      Random r = new Random();
+      int diceRoll = (r.nextInt(rollLimit)) + 1;
+      return diceRoll;
+   }
 
+   //checkOptionsForPlay will tell that player got snake, ladder or No play
+   public int checkOptions(){
+
+      int checkOptionsForPlay = dieRoll(3);
+
+      switch(checkOptionsForPlay){
+
+         case 1:
+            System.out.println("No play");
+         break;
+
+         case 2:
+            System.out.println("You got Snake");
+            diceResult=dieRoll(6);
+            currentPosition -= diceResult;
+         break;
+
+         case 3:
+            System.out.println("You got Ladder");
+            diceResult = dieRoll(6);
+            currentPosition += diceResult;
+         break;
+
+      }
+      return currentPosition;
+   }
 }
